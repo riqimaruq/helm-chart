@@ -42,6 +42,7 @@ spec:
     name: flux-system
 
 ---
+
 ## Via CLI:
 ```bash
 flux create source git klinik-repo \
@@ -49,38 +50,55 @@ flux create source git klinik-repo \
   --branch=main \
   --interval=1m \
   --namespace=flux-system
+
 ---
+
 # 📌 Metode Manual (apply YAML langsung)
 ## 1. Buat ImageRepository
 ```bash
 kubectl apply -f imagerepo.yaml -n learning-helm
+
 ---
+
 ## 2. Buat ImagePolicy
 ```bash
 kubectl apply -f imagepolicy.yaml -n learning-helm
+
 ---
+
 ## 3. Buat ImageUpdateAutomation
 ```bash
 kubectl apply -f imageupdate.yaml -n learning-helm
+
 ---
+
 ## 4. Cek hasil update image
 ```bash
 kubectl describe imageupdateautomation klinik-auto -n learning-helm
+
 ---
+
 # 📌 Metode Helm (lebih dinamis & reusable)
 ## 1. Buat namespace (jika belum ada)
 ```bash
 kubectl create namespace learning-helm
+
 ---
+
 ## 2. Install Helm chart
 ```bash
 helm install klinik-auto ./helm-chart -n learning-helm
+
 ---
+
 ## 3. Update Helm chart (jika ada perubahan)
 ```bash
 helm upgrade klinik-auto ./helm-chart -n learning-helm
+
 ---
+
 ## 4. Uninstall Helm release (jika ingin hapus)
 ```bash
 helm uninstall klinik-auto -n learning-helm
+
 ---
