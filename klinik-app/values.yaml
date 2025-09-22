@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: riqimaruq/klinik
-  tag: "latest"   # ini bisa otomatis diupdate FluxCD
+  tag: {{ .imagePolicy.klinik-policy.image }}   # ini bisa otomatis diupdate FluxCD
   pullPolicy: IfNotPresent
 
 service:

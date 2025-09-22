@@ -1,13 +1,14 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
-  name: update-klinik
-  namespace: flux-system
+  name: klinik-auto
+  namespace: learning-helm
 spec:
   interval: 1m
   sourceRef:
     kind: GitRepository
     name: klinik-repo
+    namespace: flux-system
   git:
     checkout:
       ref:
@@ -19,6 +20,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./releases
     strategy: Setters
 
