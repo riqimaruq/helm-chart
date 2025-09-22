@@ -1,11 +1,32 @@
-## 📌 Integrasi dengan FluxCD
+# 📌 Integrasi FluxCD dengan GitHub & Helm Chart
 
-FluxCD memungkinkan otomatisasi penuh mulai dari **sinkronisasi Git repository**, **tracking image baru**, hingga **commit perubahan image tag** ke repo GitOps.
-### Integrasi flux-cd dengan github
-flux create source git klinik-repo   --url=ssh://git@github.com/riqimaruq/helm-chart.git   --branch=main   --interval=1m   --namespace=flux-system
-### 1. Buat `GitRepository`
-`GitRepository` adalah resource yang menunjuk ke repository Git kamu (misalnya GitHub/Gitea).
+Repository ini berisi contoh setup **FluxCD** untuk otomatisasi update image container pada Kubernetes.  
+Dengan FluxCD kita bisa melakukan:
 
+- Sinkronisasi Git repository
+- Tracking image terbaru
+- Commit perubahan image tag ke repo GitOps
+- Deployment otomatis ke cluster Kubernetes
+
+---
+
+## 🚀 Prasyarat
+
+Sebelum mulai pastikan:
+
+- Kubernetes cluster aktif
+- FluxCD sudah terinstall
+- Git repository sudah terhubung ke Flux (`GitRepository` resource sudah dibuat)
+- Image registry bisa diakses oleh cluster
+
+---
+
+## 🔗 Integrasi FluxCD dengan GitHub
+
+### Buat GitRepository
+`GitRepository` adalah resource yang menunjuk ke repository Git (misalnya GitHub/Gitea).
+
+**Via YAML:**
 ```yaml
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
@@ -20,61 +41,46 @@ spec:
   secretRef:
     name: flux-system
 
-# FluxCD Image Automation
-
-Repository ini berisi contoh setup **FluxCD** untuk melakukan otomatisasi update image container pada Kubernetes.  
-Terdapat dua metode yang bisa digunakan:
-
-1. **Metode Manual (apply YAML langsung)**
-2. **Metode Helm (lebih dinamis & reusable)**
-
 ---
-
-## 🚀 Prasyarat
-
-- Kubernetes cluster aktif
-- FluxCD sudah terinstall
-- Git repository sudah terhubung ke Flux (`GitRepository` resource sudah dibuat)
-- Image registry sudah bisa diakses oleh cluster
-
+## Via CLI:
+```bash
+flux create source git klinik-repo \
+  --url=ssh://git@github.com/riqimaruq/helm-chart.git \
+  --branch=main \
+  --interval=1m \
+  --namespace=flux-system
 ---
-
-## 📌 Metode Manual
-
-### 1. Buat `ImageRepository`
+# 📌 Metode Manual (apply YAML langsung)
+## 1. Buat ImageRepository
 ```bash
 kubectl apply -f imagerepo.yaml -n learning-helm
-### 2. Buat ImagePolicy
+---
+## 2. Buat ImagePolicy
+```bash
 kubectl apply -f imagepolicy.yaml -n learning-helm
-
-### 3. Buat ImageUpdateAutomation
+---
+## 3. Buat ImageUpdateAutomation
+```bash
 kubectl apply -f imageupdate.yaml -n learning-helm
-
-### 4. Cek hasil update image
+---
+## 4. Cek hasil update image
+```bash
 kubectl describe imageupdateautomation klinik-auto -n learning-helm
-
-### 📌 Metode Helm
-### 1. Buat namespace (jika belum ada)
+---
+# 📌 Metode Helm (lebih dinamis & reusable)
+## 1. Buat namespace (jika belum ada)
+```bash
 kubectl create namespace learning-helm
-
-### 2. Install Helm chart
+---
+## 2. Install Helm chart
+```bash
 helm install klinik-auto ./helm-chart -n learning-helm
-
-### 3. Update Helm chart (jika ada perubahan)
+---
+## 3. Update Helm chart (jika ada perubahan)
+```bash
 helm upgrade klinik-auto ./helm-chart -n learning-helm
-
-### 4. Uninstall Helm release (jika ingin hapus)
+---
+## 4. Uninstall Helm release (jika ingin hapus)
+```bash
 helm uninstall klinik-auto -n learning-helm
-
-### 📌 Metode Helm
-### 1. Buat namespace (jika belum ada)
-kubectl create namespace learning-helm
-
-### 2. Install Helm chart
-helm install klinik-auto ./helm-chart -n learning-helm
-
-### 3. Update Helm chart (jika ada perubahan)
-helm upgrade klinik-auto ./helm-chart -n learning-helm
-
-### 4. Uninstall Helm release (jika ingin hapus)
-helm uninstall klinik-auto -n learning-helm
+---
