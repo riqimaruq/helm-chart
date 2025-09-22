@@ -1,0 +1,12 @@
+replicaCount: 1
+
+image:
+  repository: riqimaruq/klinik
+  tag: "14"   # ini bisa otomatis diupdate FluxCD
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}

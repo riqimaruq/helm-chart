@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: klinik-app
+  namespace: learning-image
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: ./apps/klinik-app    # path ke chart di repo
+      sourceRef:
+        kind: GitRepository
+        name: klinik-repo
+        namespace: flux-system
+  values:
+    image:
+      repository: riqimaruq/klinik
+      tag: "14"   # Flux Image Automation akan update ini otomatis
+      pullPolicy: IfNotPresent
+    service:
+      type: ClusterIP
+      port: 80
