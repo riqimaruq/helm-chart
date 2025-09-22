@@ -15,7 +15,7 @@ spec:
   values:
     image:
       repository: riqimaruq/klinik
-      tag: "14" # {"$imagepolicy": "flux-system:klinik-policy:tag"}
+      tag: "14" # {"$imagepolicy": "learning-helm:klinik-policy:tag"}
     service:
       type: ClusterIP
       port: 80
