@@ -11,5 +11,5 @@ spec:
     kind: GitRepository
     name: klinik-repo
     namespace: flux-system
-  targetNamespace: learning-image
+  targetNamespace: learning-helm
 

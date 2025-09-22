@@ -2,7 +2,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImageUpdateAutomation
 metadata:
   name: klinik-automation
-  namespace: learning-image
+  namespace: learning-helm
 spec:
   interval: 1m
   sourceRef:
