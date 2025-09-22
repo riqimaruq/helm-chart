@@ -1,24 +1,24 @@
-apiVersion: image.toolkit.fluxcd.io/v1beta2
+apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
-  name: klinik-automation
-  namespace: learning-helm
+  name: update-klinik
+  namespace: flux-system
 spec:
   interval: 1m
   sourceRef:
     kind: GitRepository
     name: klinik-repo
-    namespace: flux-system
   git:
     checkout:
       ref:
         branch: main
     commit:
       author:
+        email: fluxcdbot@yourdomain.com
         name: fluxcdbot
-        email: flux@example.com
     push:
       branch: main
   update:
-    path: ./apps/klinik-app/values.yaml
-    strategy: HelmChart
+    path: ./releases
+    strategy: Setters
+
