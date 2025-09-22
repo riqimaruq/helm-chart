@@ -1,0 +1,15 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: klinik-kustomization
+  namespace: flux-system
+spec:
+  interval: 1m
+  path: ./releases
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: klinik-repo
+    namespace: flux-system
+  targetNamespace: learning-image
+
