@@ -7,7 +7,7 @@ spec:
   interval: 1m
   chart:
     spec:
-      chart: ./apps/klinik-app    # path ke chart di repo
+      chart: ./
       sourceRef:
         kind: GitRepository
         name: klinik-repo
@@ -15,8 +15,7 @@ spec:
   values:
     image:
       repository: riqimaruq/klinik
-      tag: "14"   # Flux Image Automation akan update ini otomatis
-      pullPolicy: IfNotPresent
+      tag: "14"
     service:
       type: ClusterIP
       port: 80
